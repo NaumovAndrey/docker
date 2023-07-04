@@ -328,3 +328,67 @@ PING 10.0.0.2 (10.0.0.2) 56(84) bytes of data.
 4 packets transmitted, 4 received, 0% packet loss, time 3081ms
 rtt min/avg/max/mdev = 0.062/0.078/0.089/0.010 ms
 
+
+---------- seminar 1 task 3 ----------
+
+
+
+┌──(naumov㉿kaliLinux)-[/proc]
+└─$ ls -l /proc/$$/ns
+итого 0
+lrwxrwxrwx 1 naumov naumov 0 июл  5 01:44 cgroup -> 'cgroup:[4026531835]'
+lrwxrwxrwx 1 naumov naumov 0 июл  5 01:44 ipc -> 'ipc:[4026531839]'
+lrwxrwxrwx 1 naumov naumov 0 июл  5 01:44 mnt -> 'mnt:[4026531841]'
+lrwxrwxrwx 1 naumov naumov 0 июл  5 01:44 net -> 'net:[4026531840]'
+lrwxrwxrwx 1 naumov naumov 0 июл  5 01:44 pid -> 'pid:[4026531836]'
+lrwxrwxrwx 1 naumov naumov 0 июл  5 01:44 pid_for_children -> 'pid:[4026531836]'
+lrwxrwxrwx 1 naumov naumov 0 июл  5 01:44 time -> 'time:[4026531834]'
+lrwxrwxrwx 1 naumov naumov 0 июл  5 01:44 time_for_children -> 'time:[4026531834]'
+lrwxrwxrwx 1 naumov naumov 0 июл  5 01:44 user -> 'user:[4026531837]'
+lrwxrwxrwx 1 naumov naumov 0 июл  5 01:44 uts -> 'uts:[4026531838]'
+
+┌──(naumov㉿kaliLinux)-[/proc]
+└─$ sudo unshare --net /bin/bash     
+[sudo] пароль для naumov: 
+┌──(root㉿kaliLinux)-[/proc]
+└─# ls -l /proc/$$/ns
+итого 0
+lrwxrwxrwx 1 root root 0 июл  5 01:47 cgroup -> 'cgroup:[4026531835]'
+lrwxrwxrwx 1 root root 0 июл  5 01:47 ipc -> 'ipc:[4026531839]'
+lrwxrwxrwx 1 root root 0 июл  5 01:47 mnt -> 'mnt:[4026531841]'
+lrwxrwxrwx 1 root root 0 июл  5 01:47 net -> 'net:[4026532375]'
+lrwxrwxrwx 1 root root 0 июл  5 01:47 pid -> 'pid:[4026531836]'
+lrwxrwxrwx 1 root root 0 июл  5 01:47 pid_for_children -> 'pid:[4026531836]'
+lrwxrwxrwx 1 root root 0 июл  5 01:47 time -> 'time:[4026531834]'
+lrwxrwxrwx 1 root root 0 июл  5 01:47 time_for_children -> 'time:[4026531834]'
+lrwxrwxrwx 1 root root 0 июл  5 01:47 user -> 'user:[4026531837]'
+lrwxrwxrwx 1 root root 0 июл  5 01:47 uts -> 'uts:[4026531838]'
+    
+┌──(root㉿kaliLinux)-[/proc]
+└─# sudo unshare --pid --net --fork --mount-proc /bin/bash
+
+┌──(root㉿kaliLinux)-[/proc]
+└─# top                                                                                                                                                                  
+top - 01:51:15 up 12 min,  3 users,  load average: 0,07, 0,20, 0,23
+Tasks:   2 total,   1 running,   1 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 50,0 us,  0,0 sy,  0,0 ni, 50,0 id,  0,0 wa,  0,0 hi,  0,0 si,  0,0 st 
+MiB Mem :   3915,1 total,   2565,3 free,    927,2 used,    643,1 buff/cache     
+MiB Swap:    975,0 total,    975,0 free,      0,0 used.   2987,9 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                           
+      1 root      20   0    8,1m   4,9m   3,4m S   0,0   0,1   0:00.04 bash                                                                                              
+      4 root      20   0   11,3m   4,9m   3,0m R   0,0   0,1   0:00.02 top  
+      
+┌──(root㉿kaliLinux)-[/proc]
+└─# ls -l /proc/$$/ns                                                                                                                                                    
+итого 0
+lrwxrwxrwx 1 root root 0 июл  5 01:52 cgroup -> 'cgroup:[4026531835]'
+lrwxrwxrwx 1 root root 0 июл  5 01:52 ipc -> 'ipc:[4026531839]'
+lrwxrwxrwx 1 root root 0 июл  5 01:52 mnt -> 'mnt:[4026532458]'
+lrwxrwxrwx 1 root root 0 июл  5 01:52 net -> 'net:[4026532460]'
+lrwxrwxrwx 1 root root 0 июл  5 01:52 pid -> 'pid:[4026532459]'
+lrwxrwxrwx 1 root root 0 июл  5 01:52 pid_for_children -> 'pid:[4026532459]'
+lrwxrwxrwx 1 root root 0 июл  5 01:52 time -> 'time:[4026531834]'
+lrwxrwxrwx 1 root root 0 июл  5 01:52 time_for_children -> 'time:[4026531834]'
+lrwxrwxrwx 1 root root 0 июл  5 01:52 user -> 'user:[4026531837]'
+lrwxrwxrwx 1 root root 0 июл  5 01:52 uts -> 'uts:[4026531838]'
