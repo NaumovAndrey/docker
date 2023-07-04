@@ -1,2 +1,163 @@
-seminar1
+$ git init
+Initialized empty Git repository in E:/Документы/Андрей/Обучение/GeekBrains/docker/.git/
 
+andre@DESKTOP-7C89L1L MINGW64 /e/Документы/Андрей/Обучение/GeekBrains/docker (master)
+$ git add .
+
+andre@DESKTOP-7C89L1L MINGW64 /e/Документы/Андрей/Обучение/GeekBrains/docker (master)
+$ git commit -m "init rep"
+[master (root-commit) ef02ef4] init rep
+ 1 file changed, 2 insertions(+)
+ create mode 100644 seminar1.txt
+
+andre@DESKTOP-7C89L1L MINGW64 /e/Документы/Андрей/Обучение/GeekBrains/docker (master)
+$ git status
+On branch master
+nothing to commit, working tree clean
+
+andre@DESKTOP-7C89L1L MINGW64 /e/Документы/Андрей/Обучение/GeekBrains/docker (master)
+$ git remote add origin https://github.com/NaumovAndrey/docker.git
+
+andre@DESKTOP-7C89L1L MINGW64 /e/Документы/Андрей/Обучение/GeekBrains/docker (master)
+$ git branch -M master
+
+andre@DESKTOP-7C89L1L MINGW64 /e/Документы/Андрей/Обучение/GeekBrains/docker (master)
+$ git push -u origin master
+Enumerating objects: 3, done.
+Counting objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 219 bytes | 219.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+To https://github.com/NaumovAndrey/docker.git
+ * [new branch]      master -> master
+branch 'master' set up to track 'origin/master'.
+
+
+---------- seminar1 ----------
+
+(naumov㉿kaliLinux)-[~]
+└─$ sudo su
+[sudo] пароль для naumov: 
+┌──(root㉿kaliLinux)-[/home/naumov]
+└─# apt update; apt upgrade -y; echo "обновление завершено"
+Сущ:1 http://mirror.truenetwork.ru/kali kali-rolling InRelease
+Чтение списков пакетов… Готово
+Построение дерева зависимостей… Готово
+Чтение информации о состоянии… Готово         
+Все пакеты имеют последние версии.
+Чтение списков пакетов… Готово
+Построение дерева зависимостей… Готово
+Чтение информации о состоянии… Готово         
+Расчёт обновлений… Готово
+Следующие пакеты устанавливались автоматически и больше не требуются:
+  libmujs2 libyara9 linux-image-6.1.0-kali5-amd64 python3-jaraco.classes python3-texttable tftp
+Для их удаления используйте «sudo apt autoremove».
+Обновлено 0 пакетов, установлено 0 новых пакетов, для удаления отмечено 0 пакетов, и 0 пакетов не обновлено.
+обновление завершено
+                                                                                                                                                                         
+┌──(root㉿kaliLinux)-[/home/naumov]
+└─# exit
+                                                                                                                                                                         
+┌──(naumov㉿kaliLinux)-[~]
+└─$ mkdir newroot
+                                                                                                                                                                         
+┌──(naumov㉿kaliLinux)-[~]
+└─$ ll    
+итого 76
+-rw-r--r-- 1 naumov naumov  242 апр 30 11:41  clear_dir
+-rw-r--r-- 1 naumov naumov   36 апр  9 20:55  fileHW4
+drwxr-xr-x 4 naumov naumov 4096 мар 30 23:52  GNUstep
+drwxr-xr-x 9 naumov naumov 4096 мая  2 13:42  homework
+-rw-r--r-- 1 root   root    439 апр 10 22:34  ip.rules
+drwxr-xr-x 2 naumov naumov 4096 апр  9 13:33  lws
+-rw-r--r-- 1 root   root     48 апр 30 11:05  name_us
+drwxr-xr-x 2 naumov naumov 4096 июл  4 23:56  newroot
+-rw-r--r-- 1 root   root     71 апр 30 11:18  num
+drwx------ 3 naumov naumov 4096 мая  3 22:10  snap
+drwxr-xr-x 3 naumov naumov 4096 мар 30 18:50  test2
+drwxr-xr-x 2 naumov naumov 4096 мар 26 13:05  Видео
+drwxr-xr-x 2 naumov naumov 4096 мар 30 14:57  Документы
+drwxr-xr-x 2 naumov naumov 4096 мар 26 13:05  Загрузки
+drwxr-xr-x 2 naumov naumov 4096 апр 27 00:25  Изображения
+drwxr-xr-x 2 naumov naumov 4096 мар 26 13:05  Музыка
+drwxr-xr-x 2 naumov naumov 4096 мар 30 20:10  Общедоступные
+drwxr-xr-x 2 naumov naumov 4096 мар 26 13:05 'Рабочий стол'
+drwxr-xr-x 2 naumov naumov 4096 мар 26 13:05  Шаблоны
+                                                                                                                                                                     
+┌──(naumov㉿kaliLinux)-[~]
+└─$ mkdir newroot/bin 
+                                                                                                                                                                         
+┌──(naumov㉿kaliLinux)-[~]
+└─$ cp /bin/bash ./newroot/bin
+                                                                                                                                                                         
+┌──(naumov㉿kaliLinux)-[~]
+└─$ la -al ./newroot/bin       
+итого 1244
+drwxr-xr-x 2 naumov naumov    4096 июл  5 00:01 .
+drwxr-xr-x 3 naumov naumov    4096 июл  5 00:00 ..
+-rwxr-xr-x 1 naumov naumov 1265648 июл  5 00:01 bash
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ ldd /bin/bash       
+        linux-vdso.so.1 (0x00007ffc6127b000)
+        libtinfo.so.6 => /lib/x86_64-linux-gnu/libtinfo.so.6 (0x00007f913ca09000)
+        libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f913c828000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f913cb94000)
+                                                                                                                                                                               
+┌──(naumov㉿kaliLinux)-[~]
+└─$ mkdir newroot/lib
+                                                                                                                                                                         
+┌──(naumov㉿kaliLinux)-[~]
+└─$ mkdir newroot/lib64       
+                                                                                                                                                                         
+┌──(naumov㉿kaliLinux)-[~]
+└─$ ls -al ./newroot     
+итого 20
+drwxr-xr-x  5 naumov naumov 4096 июл  5 00:07 .
+drwx------ 23 naumov naumov 4096 июл  4 23:56 ..
+drwxr-xr-x  2 naumov naumov 4096 июл  5 00:01 bin
+drwxr-xr-x  2 naumov naumov 4096 июл  5 00:07 lib
+drwxr-xr-x  2 naumov naumov 4096 июл  5 00:07 lib64
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ cp /lib/x86_64-linux-gnu/libtinfo.so.6 newroot/lib
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ cp /lib/x86_64-linux-gnu/libc.so.6 newroot/lib/   
+                                                                                                                                                                         
+┌──(naumov㉿kaliLinux)-[~]
+└─$ cp /lib64/ld-linux-x86-64.so.2 newroot/lib64/  
+                                                                                                                                                                         
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo chroot ./newroot /bin/bash             
+[sudo] пароль для naumov: 
+bash-5.2# la -al
+bash: la: command not found
+bash-5.2# pwd
+/
+bash-5.2#
+bash-5.2# exit
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ ldd /usr/bin/ls                
+        linux-vdso.so.1 (0x00007fff306f9000)
+        libselinux.so.1 => /lib/x86_64-linux-gnu/libselinux.so.1 (0x00007f6cf78c6000)
+        libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f6cf76e5000)
+        libpcre2-8.so.0 => /lib/x86_64-linux-gnu/libpcre2-8.so.0 (0x00007f6cf764b000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007f6cf7932000)
+
+(произошёл сбой, перезапуск, истории нет. Использовал команды:)
+mkdir -p newroot/usr/bin
+cp /lib/x86_64-linux-gnu/libselinux.so.1 newroot/lib
+cp /lib/x86_64-linux-gnu/libc.so.6 newroot/lib
+cp /lib/x86_64-linux-gnu/libpcre2-8.so.0 newroot/lib
+cp /lib64/ld-linux-x86-64.so.2 newroot/lib64
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo chroot ./newroot /bin/bash
+bash-5.2# ls -l
+total 16
+drwxr-xr-x 2 1000 1000 4096 Jul  4 17:01 bin
+drwxr-xr-x 2 1000 1000 4096 Jul  4 17:33 lib
+drwxr-xr-x 2 1000 1000 4096 Jul  4 17:16 lib64
+drwxr-xr-x 3 1000 1000 4096 Jul  4 17:28 usr
+bash-5.2#
