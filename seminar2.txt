@@ -1,0 +1,332 @@
+ seminar2
+ 
+ 
+┌──(root㉿kaliLinux)-[/home/naumov]
+└─# apt install cgroup-tools                               
+Чтение списков пакетов… Готово
+Построение дерева зависимостей… Готово
+Чтение информации о состоянии… Готово         
+Будут установлены следующие дополнительные пакеты:
+  libcgroup2
+Следующие НОВЫЕ пакеты будут установлены:
+  cgroup-tools libcgroup2
+Обновлено 0 пакетов, установлено 2 новых пакетов, для удаления отмечено 0 пакетов, и 0 пакетов не обновлено.
+Необходимо скачать 128 kB архивов.
+После данной операции объём занятого дискового пространства возрастёт на 480 kB.
+Хотите продолжить? [Д/н] y
+Пол:1 http://mirror.truenetwork.ru/kali kali-rolling/main amd64 libcgroup2 amd64 2.0.2-2 [51,7 kB]
+Пол:2 http://mirror.truenetwork.ru/kali kali-rolling/main amd64 cgroup-tools amd64 2.0.2-2 [76,3 kB]
+Получено 128 kB за 2с (68,1 kB/s)         
+Выбор ранее не выбранного пакета libcgroup2:amd64.
+(Чтение базы данных … на данный момент установлен 430501 файл и каталог.)
+Подготовка к распаковке …/libcgroup2_2.0.2-2_amd64.deb …
+Распаковывается libcgroup2:amd64 (2.0.2-2) …
+Выбор ранее не выбранного пакета cgroup-tools.
+Подготовка к распаковке …/cgroup-tools_2.0.2-2_amd64.deb …
+Распаковывается cgroup-tools (2.0.2-2) …
+Настраивается пакет libcgroup2:amd64 (2.0.2-2) …
+Настраивается пакет cgroup-tools (2.0.2-2) …
+Обрабатываются триггеры для kali-menu (2023.3.1) …
+Обрабатываются триггеры для libc-bin (2.36-9) …
+Обрабатываются триггеры для man-db (2.11.2-2) …
+Сканирование процессов...                                                                                                                                                                                                                                                                              
+Сканирование образов linux...                                                                                                                                                                                                                                                                            
+
+Запущено ядро последней версии.
+
+Службы не требуют перезапуска.
+
+Контейнеры не требуют перезапуска.
+
+В сеансах пользователей нет устаревших процессов.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+
+┌──(root㉿kaliLinux)-[/home/naumov]
+└─# unshare --fork --pid --mount-proc bash
+
+┌──(root㉿kaliLinux)-[/home/naumov]
+└─# cgcreate -a $USER -g memory:testgroup -g cpu:testgroup
+
+┌──(root㉿kaliLinux)-[/home/naumov]
+└─# ls /sys/fs/cgroup/testgroup/
+cgroup.controllers  cgroup.max.depth        cgroup.stat             cpu.idle       cpuset.cpus            cpuset.mems.effective  io.max       memory.current       memory.low        memory.oom.group  memory.stat          memory.swap.max       pids.events
+cgroup.events       cgroup.max.descendants  cgroup.subtree_control  cpu.max        cpuset.cpus.effective  cpu.stat               io.pressure  memory.events        memory.max        memory.peak       memory.swap.current  memory.zswap.current  pids.max
+cgroup.freeze       cgroup.pressure         cgroup.threads          cpu.max.burst  cpuset.cpus.partition  cpu.weight             io.stat      memory.events.local  memory.min        memory.pressure   memory.swap.events   memory.zswap.max      pids.peak
+cgroup.kill         cgroup.procs            cgroup.type             cpu.pressure   cpuset.mems            cpu.weight.nice        io.weight    memory.high          memory.numa_stat  memory.reclaim    memory.swap.high     pids.current
+
+┌──(root㉿kaliLinux)-[/home/naumov]
+└─# cgexec -g memory:testgroup bash
+┌──(root㉿kaliLinux)-[/home/naumov]
+└─# exit
+
+--homework2
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo apt install lxc debootstrap bridge-utils lxc-templates
+[sudo] пароль для naumov: 
+Чтение списков пакетов… Готово
+Построение дерева зависимостей… Готово
+Чтение информации о состоянии… Готово         
+Уже установлен пакет lxc самой новой версии (1:5.0.2-1).
+Уже установлен пакет debootstrap самой новой версии (1.0.128+nmu2).
+debootstrap помечен как установленный вручную.
+Уже установлен пакет bridge-utils самой новой версии (1.7.1-1).
+bridge-utils помечен как установленный вручную.
+Уже установлен пакет lxc-templates самой новой версии (3.0.4.48.g4765da8-1).
+lxc-templates помечен как установленный вручную.
+Обновлено 0 пакетов, установлено 0 новых пакетов, для удаления отмечено 0 пакетов, и 0 пакетов не обновлено.
+
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-create -n test1 -t kaliLinux
+lxc-create: test1: ../src/lxc/utils.c: get_template_path: 900 No such file or directory - bad template: kaliLinux
+lxc-create: test1: ../src/lxc/lxccontainer.c: __lxcapi_create: 1799 Template "kaliLinux" not found
+lxc-create: test1: ../src/lxc/tools/lxc_create.c: main: 317 Failed to create container test1
+                                                                                                                                                                                                                                                                                                                            
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-create -n test1 -t ubuntu   
+Checking cache download in /var/cache/lxc/xenial/rootfs-amd64 ... 
+Installing packages in template: apt-transport-https,ssh,vim,language-pack-en
+Downloading ubuntu xenial minimal ...
+
+___(и до этого около тысячм строк, повидимому сделал контейнер на ubuntu предварительно скачав. до этого писал sudo lxc-create -n test1 -t kaliLinux, почему не вышло?)
+
+Setting up ubuntu-minimal (1.361.6) ...
+Processing triggers for libc-bin (2.23-0ubuntu11.3) ...
+Processing triggers for systemd (229-4ubuntu21.31) ...
+Processing triggers for initramfs-tools (0.122ubuntu8.17) ...
+Processing triggers for resolvconf (1.78ubuntu7) ...
+locale: Cannot set LC_CTYPE to default locale: No such file or directory
+locale: Cannot set LC_MESSAGES to default locale: No such file or directory
+locale: Cannot set LC_ALL to default locale: No such file or directory
+Download complete
+Copy /var/cache/lxc/xenial/rootfs-amd64 to /var/lib/lxc/test1/rootfs ... 
+Copying rootfs to /var/lib/lxc/test1/rootfs ...
+Generating locales (this might take a while)...
+  ru_RU.UTF-8... done
+Generation complete.
+Creating SSH2 RSA key; this may take some time ...
+2048 SHA256:QYVwqa70Vp0qEvpKXnswGeYKaz1PUps2bkVe9D6WiI8 root@kaliLinux (RSA)
+Creating SSH2 DSA key; this may take some time ...
+1024 SHA256:LTaUvbzG0m/QdJ3VQwisRBis4PYD2u8XxTlYez144/A root@kaliLinux (DSA)
+Creating SSH2 ECDSA key; this may take some time ...
+256 SHA256:IZBwLfzpPHNVbmIzYmIisG6yW4ST+zwxwkS8s49pGiA root@kaliLinux (ECDSA)
+Creating SSH2 ED25519 key; this may take some time ...
+256 SHA256:yGQvP9ndRFik4M9bK4NORG17tKfgGwmuBGitGcUIveo root@kaliLinux (ED25519)
+invoke-rc.d: could not determine current runlevel
+invoke-rc.d: policy-rc.d denied execution of start.
+
+Current default time zone: 'Etc/UTC'
+Local time is now:      Sun Jul  9 14:28:50 UTC 2023.
+Universal Time is now:  Sun Jul  9 14:28:50 UTC 2023.
+
+
+##
+# The default user is 'ubuntu' with password 'ubuntu'!
+# Use the 'sudo' command to run tasks as root in the container.
+##
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$  sudo lxc-start -n test1
+[sudo] пароль для naumov: 
+                                                                                                                                                                                                                                                                                                                            
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-attach -n test1          
+root@test1:/# free -m
+              total        used        free      shared  buff/cache   available
+Mem:           3915         885        1021          45        2007        2656
+Swap:           974           0         974
+root@test1:/# exit
+exit
+                                                                                                                                                                                                                                                                                                                            
+┌──(naumov㉿kaliLinux)-[~]
+└─$ free -m                                           
+               total        used        free      shared  buff/cache   available
+Mem:            3915        1244        1035          44        1946        2670
+Swap:            974           0         974
+ 
+ 
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-cgroup -n test1 memory.max 256M
+                                                                                                                                                                                                                                                                                                                            
+┌──(naumov㉿kaliLinux)-[~]
+└─$ free -m                                 
+               total        used        free      shared  buff/cache   available
+Mem:            3915        1259        1018          44        1949        2655
+Swap:            974           0         974
+ 
+ 
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-cgroup -n test1 memory.max 512M
+                                                                                                                                                                                                                                                                                                                            
+(почему не изменяет значение памяти?)
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-attach -n test1                
+root@test1:/# free -m
+              total        used        free      shared  buff/cache   available
+Mem:           3915         879        1025          45        2010        2662
+Swap:           974           0         974
+root@test1:/# 
+
+
+
+
+---task2
+
+
+
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-create -n container1 -t ubuntu -f /usr/share/doc/lxc/examples/lxc-veth.conf
+[sudo] пароль для naumov: 
+Checking cache download in /var/cache/lxc/xenial/rootfs-amd64 ... 
+Copy /var/cache/lxc/xenial/rootfs-amd64 to /var/lib/lxc/container1/rootfs ... 
+Copying rootfs to /var/lib/lxc/container1/rootfs ...
+Generating locales (this might take a while)...
+  ru_RU.UTF-8... done
+Generation complete.
+Creating SSH2 RSA key; this may take some time ...
+2048 SHA256:EyGTsTFziEf1xhL4gaMGJ3PyqGzOAo1JOV2IOTAtPNg root@kaliLinux (RSA)
+Creating SSH2 DSA key; this may take some time ...
+1024 SHA256:WS5STkTs/rhsAbyf1c9QSnWVMqN8YEy8bAZOdq/T/Lc root@kaliLinux (DSA)
+Creating SSH2 ECDSA key; this may take some time ...
+256 SHA256:yRmUev6sUB6rLOimtmO4fVIjN5FWxSPJUp0nxdhyylo root@kaliLinux (ECDSA)
+Creating SSH2 ED25519 key; this may take some time ...
+256 SHA256:zdjxAokaVqfwxdZPs+gy3cgtuk6PvR0OiC5wPvZl6Rs root@kaliLinux (ED25519)
+invoke-rc.d: could not determine current runlevel
+invoke-rc.d: policy-rc.d denied execution of start.
+
+Current default time zone: 'Etc/UTC'
+Local time is now:      Sun Jul  9 15:35:10 UTC 2023.
+Universal Time is now:  Sun Jul  9 15:35:10 UTC 2023.
+
+
+##
+# The default user is 'ubuntu' with password 'ubuntu'!
+# Use the 'sudo' command to run tasks as root in the container.
+##
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-create -n container2 -t ubuntu -f /usr/share/doc/lxc/examples/lxc-veth.conf
+Checking cache download in /var/cache/lxc/xenial/rootfs-amd64 ... 
+Copy /var/cache/lxc/xenial/rootfs-amd64 to /var/lib/lxc/container2/rootfs ... 
+Copying rootfs to /var/lib/lxc/container2/rootfs ...
+Generating locales (this might take a while)...
+  ru_RU.UTF-8... done
+Generation complete.
+Creating SSH2 RSA key; this may take some time ...
+2048 SHA256:8wy2bAX70UntaTV9A08T5kowuRI3OM4nZdEZzan/prk root@kaliLinux (RSA)
+Creating SSH2 DSA key; this may take some time ...
+1024 SHA256:+N+UuveHe3+rP7BmPYn8rjPhaOz/xES799z7vumdZLY root@kaliLinux (DSA)
+Creating SSH2 ECDSA key; this may take some time ...
+256 SHA256:yGnqXzPhJONFRALObmZvDd+BVOBbY7e4fE3Vghqf1Ys root@kaliLinux (ECDSA)
+Creating SSH2 ED25519 key; this may take some time ...
+256 SHA256:pBr41KNQ4HJSdgpEu5xTpLu/KxFgjuGAFemZla1xTlg root@kaliLinux (ED25519)
+invoke-rc.d: could not determine current runlevel
+invoke-rc.d: policy-rc.d denied execution of start.
+
+Current default time zone: 'Etc/UTC'
+Local time is now:      Sun Jul  9 15:52:22 UTC 2023.
+Universal Time is now:  Sun Jul  9 15:52:22 UTC 2023.
+
+
+##
+# The default user is 'ubuntu' with password 'ubuntu'!
+# Use the 'sudo' command to run tasks as root in the container.
+##
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-ls                                                                       
+container1 container2 test1      
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-start -n container1; sudo lxc-start -n container2
+lxc-start: container1: ../src/lxc/lxccontainer.c: wait_on_daemonized_start: 878 Received container state "ABORTING" instead of "RUNNING"
+lxc-start: container1: ../src/lxc/tools/lxc_start.c: main: 306 The container failed to start
+lxc-start: container1: ../src/lxc/tools/lxc_start.c: main: 309 To get more details, run the container in foreground mode
+lxc-start: container1: ../src/lxc/tools/lxc_start.c: main: 311 Additional information can be obtained by setting the --logfile and --logpriority options
+lxc-start: container2: ../src/lxc/lxccontainer.c: wait_on_daemonized_start: 878 Received container state "ABORTING" instead of "RUNNING"
+lxc-start: container2: ../src/lxc/tools/lxc_start.c: main: 306 The container failed to start
+lxc-start: container2: ../src/lxc/tools/lxc_start.c: main: 309 To get more details, run the container in foreground mode
+lxc-start: container2: ../src/lxc/tools/lxc_start.c: main: 311 Additional information can be obtained by setting the --logfile and --logpriority options
+                                                                                                                                                                                    
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-attach -n container1                             
+lxc-attach: container1: ../src/lxc/attach.c: get_attach_context: 406 Connection refused - Failed to get init pid
+lxc-attach: container1: ../src/lxc/attach.c: lxc_attach: 1470 Connection refused - Failed to get attach context
+                                                                                                                                                                                    
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-attach -n container2
+lxc-attach: container2: ../src/lxc/attach.c: get_attach_context: 406 Connection refused - Failed to get init pid
+lxc-attach: container2: ../src/lxc/attach.c: lxc_attach: 1470 Connection refused - Failed to get attach context
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-ls --fancy
+NAME       STATE   AUTOSTART GROUPS IPV4 IPV6 UNPRIVILEGED 
+container1 STOPPED 0         -      -    -    false        
+container2 STOPPED 0         -      -    -    false        
+test1      RUNNING 0         -      -    -    false        
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-start -n container1;                             
+lxc-start: container1: ../src/lxc/lxccontainer.c: wait_on_daemonized_start: 878 Received container state "ABORTING" instead of "RUNNING"
+lxc-start: container1: ../src/lxc/tools/lxc_start.c: main: 306 The container failed to start
+lxc-start: container1: ../src/lxc/tools/lxc_start.c: main: 309 To get more details, run the container in foreground mode
+lxc-start: container1: ../src/lxc/tools/lxc_start.c: main: 311 Additional information can be obtained by setting the --logfile and --logpriority options
+                                                                                                                                                                                    
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-ls --fancy          
+NAME       STATE   AUTOSTART GROUPS IPV4 IPV6 UNPRIVILEGED 
+container1 STOPPED 0         -      -    -    false        
+container2 STOPPED 0         -      -    -    false        
+test1      RUNNING 0         -      -    -    false        
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo systemctl restart lxc.service
+                                                                                                                                                                                    
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-ls --fancy               
+NAME       STATE   AUTOSTART GROUPS IPV4 IPV6 UNPRIVILEGED 
+container1 STOPPED 0         -      -    -    false        
+container2 STOPPED 0         -      -    -    false        
+test1      STOPPED 0         -      -    -    false        
+
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-start -n test1     
+                                                                                                                                                                                    
+┌──(naumov㉿kaliLinux)-[~]
+└─$ sudo lxc-ls --fancy               
+NAME       STATE   AUTOSTART GROUPS IPV4 IPV6 UNPRIVILEGED 
+container1 STOPPED 0         -      -    -    false        
+container2 STOPPED 0         -      -    -    false        
+test1      RUNNING 0         -      -    -    false        
+
+
+ни первый ни второй контейнер не запускаются, примерно можно так (возможно из-за вирт сетевых интерфейсов, обычный тест работает)
+хотя файл присутствует:
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ ll /usr/share/doc/lxc/examples/                                       
+итого 40
+-rw-r--r-- 1 root root  713 янв 17 09:53 lxc-complex.conf
+-rw-r--r-- 1 root root  118 янв 17 09:53 lxc-empty-netns.conf
+-rw-r--r-- 1 root root  289 янв 17 09:53 lxc-macvlan.conf
+-rw-r--r-- 1 root root   84 янв 17 09:53 lxc-no-netns.conf
+-rw-r--r-- 1 root root  305 янв 17 09:53 lxc-phys.conf
+-rw-r--r-- 1 root root  332 янв 17 09:53 lxc-veth.conf
+-rw-r--r-- 1 root root  308 янв 17 09:53 lxc-vlan.conf
+-rw-r--r-- 1 root root 1386 янв 17 09:53 seccomp-v1.conf
+-rw-r--r-- 1 root root  659 янв 17 09:53 seccomp-v2.conf
+-rw-r--r-- 1 root root  332 янв 17 09:53 seccomp-v2-denylist.conf
+
+и файл:
+vim /usr/share/doc/lxc/examples/lxc-veth.conf
+https://1drv.ms/i/s!An0Rda3kOW_0gYkvy1znS7E890zLcQ?e=px0ueA
+
+ip addr add 10.0.12.1/24 dev eth0
+ip link set dev eth0 up
+и после пробросить маршрут 
+sudo ip route add 10.0.12.0/24 via 10.0.12.1
+sudo ip route add 10.0.13.0/24 via 10.0.13.1, но не точно

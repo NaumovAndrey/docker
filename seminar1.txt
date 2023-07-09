@@ -1,4 +1,4 @@
-$ git init
+$ git init(/e/Документы/Андрей/Обучение/GeekBrains/docker)
 Initialized empty Git repository in E:/Документы/Андрей/Обучение/GeekBrains/docker/.git/
 
 andre@DESKTOP-7C89L1L MINGW64 /e/Документы/Андрей/Обучение/GeekBrains/docker (master)
