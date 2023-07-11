@@ -1,0 +1,229 @@
+┌──(naumov㉿kaliLinux)-[~]
+└─$ docker run --name test-mariadb -e MARIADB_ROOT_PASSWORD=pass -d mariadb:10.10.2
+Unable to find image 'mariadb:10.10.2' locally
+10.10.2: Pulling from library/mariadb
+10ac4908093d: Pull complete 
+44779101e748: Pull complete 
+a721db3e3f3d: Pull complete 
+1850a929b84a: Pull complete 
+397a918c7da3: Pull complete 
+806be17e856d: Pull complete 
+634de6c90876: Pull complete 
+cd00854cfb1a: Pull complete 
+Digest: sha256:bfc25a68e113de43d0d112f5a7126df8e278579c3224e3923359e1c1d8d5ce6e
+Status: Downloaded newer image for mariadb:10.10.2
+65378570b67341c16d1e46906d94637a1d43474ab1023f068f3a1bae222d6321
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ docker ps -a                                                                   
+CONTAINER ID   IMAGE             COMMAND                  CREATED              STATUS              PORTS      NAMES
+65378570b673   mariadb:10.10.2   "docker-entrypoint.s…"   About a minute ago   Up About a minute   3306/tcp   test-mariadb
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ docker exec -it 65378570b673 bash
+root@65378570b673:/#
+root@65378570b673:/# top
+
+top - 13:26:39 up  3:35,  0 users,  load average: 0.45, 0.39, 0.29
+Tasks:   3 total,   1 running,   2 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  0.6 us,  1.1 sy,  0.0 ni, 98.2 id,  0.0 wa,  0.0 hi,  0.1 si,  0.0 st
+MiB Mem :   3915.1 total,   1431.0 free,   1170.9 used,   1313.2 buff/cache
+MiB Swap:    975.0 total,    975.0 free,      0.0 used.   2483.3 avail Mem 
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                                                                                                                                              
+      1 mysql     20   0 1283844 229900  23148 S   0.3   5.7   0:00.69 mariadbd                                                                                                                                                                                                                                             
+    141 root      20   0    5044   4076   3604 S   0.0   0.1   0:00.04 bash                                                                                                                                                                                                                                                 
+    149 root      20   0    7768   3640   3048 R   0.0   0.1   0:00.04 top                                                                                                                                                                                                                                                  
+root@65378570b673:/# exit
+exit
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ docker ps -a                     
+CONTAINER ID   IMAGE             COMMAND                  CREATED          STATUS          PORTS      NAMES
+65378570b673   mariadb:10.10.2   "docker-entrypoint.s…"   15 minutes ago   Up 15 minutes   3306/tcp   test-mariadb
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ docker stop 65378570b673
+65378570b673
+                                                                                                                                                                                                                                                                                                                            
+┌──(naumov㉿kaliLinux)-[~]
+└─$ docker rm 65378570b673                                                         
+65378570b673
+                                                                                                                                                                                                                                                                                                                            
+┌──(naumov㉿kaliLinux)-[~]
+└─$ docker ps -a                 
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+
+┌──(naumov㉿kaliLinux)-[~/homework/docker/hw3]
+└─$ docker run --name mariadb -v ./mydb:/var/lib/mysql -e MARIADB_ROOT_PASSWORD=pass -d mariadb:10.10.2
+
+docker: Error response from daemon: create ./mydb: "./mydb" includes invalid characters for a local volume name, only "[a-zA-Z0-9][a-zA-Z0-9_.-]" are allowed. If you intended to pass a host directory, use absolute path.
+See 'docker run --help'.
+
+┌──(naumov㉿kaliLinux)-[~/homework/docker/hw3]
+└─$ pwd
+/home/naumov/homework/docker/hw3
+
+┌──(naumov㉿kaliLinux)-[~/homework/docker/hw3]
+└─$ docker run --name mariadb -v /home/naumov/homework/docker/hw3/mydb/:/var/lib/mysql -e MARIADB_ROOT_PASSWORD=pass -d mariadb:10.10.2 
+
+fb795fc26dff305d4481a074df42c46d5737c58003f2bb69d41eb1f85fcbef2d
+                                                                                                                                                                                                                                                                                                                            
+┌──(naumov㉿kaliLinux)-[~/homework/docker/hw3]
+└─$ docker ps                                                                                                                          
+CONTAINER ID   IMAGE             COMMAND                  CREATED          STATUS          PORTS      NAMES
+fb795fc26dff   mariadb:10.10.2   "docker-entrypoint.s…"   22 seconds ago   Up 20 seconds   3306/tcp   mariadb
+ 
+┌──(naumov㉿kaliLinux)-[~/homework/docker/hw3]
+└─$ docker exec -it fb795fc26dff bash
+root@fb795fc26dff:/# top
+top - 14:04:06 up  4:12,  0 users,  load average: 0.40, 0.38, 0.31
+Tasks:   3 total,   1 running,   2 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  1.0 us,  3.6 sy,  0.0 ni, 95.0 id,  0.1 wa,  0.0 hi,  0.4 si,  0.0 st
+MiB Mem :   3915.1 total,   1329.8 free,   1223.6 used,   1361.7 buff/cache
+MiB Swap:    975.0 total,    975.0 free,      0.0 used.   2416.5 avail Mem 
+Change delay from 3.0 to f
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                                                                                                                                              
+      1 mysql     20   0 1414916 223984  23404 S   0.0   5.6   0:00.63 mariadbd                                                                                                                                                                                                                                             
+    136 root      20   0    5044   4136   3540 S   0.0   0.1   0:00.08 bash                                                                                                                                                                                                                                                 
+    145 root      20   0    7768   3512   2920 R   0.0   0.1   0:00.02 top                                                                                                                                                                                                                                                  
+
+root@fb795fc26dff:/# mysql -u root -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 3
+Server version: 10.10.2-MariaDB-1:10.10.2+maria~ubu2204 mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.005 sec)
+
+MariaDB [(none)]> CREATE DATABASE geekbrains;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> CREATE DATABASES "geekbrains";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'DATABASES "geekbrains"' at line 1
+MariaDB [(none)]> CREATE DATABASE geekbrains;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| geekbrains         |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.001 sec)
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ la -al ./homework/docker/hw3/mydb 
+итого 139384
+drwxr-xr-x 6 vboxadd systemd-journal      4096 июл 11 21:13 .
+drwxr-xr-x 3 naumov  naumov               4096 июл 11 20:50 ..
+-rw-rw---- 1 vboxadd systemd-journal  16842752 июл 11 20:59 aria_log.00000001
+-rw-rw---- 1 vboxadd systemd-journal        52 июл 11 20:59 aria_log_control
+-rw-rw---- 1 vboxadd systemd-journal         9 июл 11 20:59 ddl_recovery.log
+drwx------ 2 vboxadd systemd-journal      4096 июл 11 21:13 geekbrains
+-rw-rw---- 1 vboxadd systemd-journal       868 июл 11 20:59 ib_buffer_pool
+-rw-rw---- 1 vboxadd systemd-journal  12582912 июл 11 20:59 ibdata1
+-rw-rw---- 1 vboxadd systemd-journal 100663296 июл 11 21:01 ib_logfile0
+-rw-rw---- 1 vboxadd systemd-journal  12582912 июл 11 20:59 ibtmp1
+-rw-rw---- 1 vboxadd systemd-journal         0 июл 11 20:59 multi-master.info
+drwx------ 2 vboxadd systemd-journal      4096 июл 11 20:59 mysql
+-rw-r--r-- 1 vboxadd systemd-journal        15 июл 11 20:59 mysql_upgrade_info
+drwx------ 2 vboxadd systemd-journal      4096 июл 11 20:59 performance_schema
+drwx------ 2 vboxadd systemd-journal     12288 июл 11 20:59 sys
+
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ docker run --name phpmyadmin -d --link mariadb:db -p 8081:80 phpmyadmin/phpmyadmin
+Unable to find image 'phpmyadmin/phpmyadmin:latest' locally
+latest: Pulling from phpmyadmin/phpmyadmin
+f1f26f570256: Pull complete 
+ee0a4e40ccac: Pull complete 
+5ca9fb408faa: Pull complete 
+5baa808a48ff: Pull complete 
+6e8d74e4d8ee: Pull complete 
+fac8e70fcf67: Pull complete 
+b3b7906fb177: Pull complete 
+cb4935bbeb83: Pull complete 
+c9e00ef337e3: Pull complete 
+cfe495c8d695: Pull complete 
+dcc3fd107f0c: Pull complete 
+fe3c587d1f07: Pull complete 
+677f27d94442: Pull complete 
+4d778a8cb653: Pull complete 
+5f0f7b557ecd: Pull complete 
+6ad259d60f7c: Pull complete 
+41acd705cbc4: Pull complete 
+912204d5a7e6: Pull complete 
+Digest: sha256:ed87921184b59f7d8fc85c6a5f041c22758a4d4419c0ee3bac38eb7e133eaed3
+Status: Downloaded newer image for phpmyadmin/phpmyadmin:latest
+ebdc40c0ecb9540e0bb6bfdd106bed950c4b14c375904d8afe249503e825e0c7
+ 
+┌──(naumov㉿kaliLinux)-[~]
+└─$ docker ps                                                                         
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                   NAMES
+ebdc40c0ecb9   phpmyadmin/phpmyadmin   "/docker-entrypoint.…"   54 seconds ago   Up 48 seconds   0.0.0.0:8081->80/tcp, :::8081->80/tcp   phpmyadmin
+fb795fc26dff   mariadb:10.10.2         "docker-entrypoint.s…"   34 minutes ago   Up 34 minutes   3306/tcp                                mariadb
+
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ la -al ./homework/docker/hw3/mydb
+итого 139388
+drwxr-xr-x 7 vboxadd systemd-journal      4096 июл 11 21:38 .
+drwxr-xr-x 3 naumov  naumov               4096 июл 11 20:50 ..
+-rw-rw---- 1 vboxadd systemd-journal  16842752 июл 11 20:59 aria_log.00000001
+-rw-rw---- 1 vboxadd systemd-journal        52 июл 11 20:59 aria_log_control
+-rw-rw---- 1 vboxadd systemd-journal         9 июл 11 20:59 ddl_recovery.log
+drwx------ 2 vboxadd systemd-journal      4096 июл 11 21:38 gb
+drwx------ 2 vboxadd systemd-journal      4096 июл 11 21:13 geekbrains
+-rw-rw---- 1 vboxadd systemd-journal       868 июл 11 20:59 ib_buffer_pool
+-rw-rw---- 1 vboxadd systemd-journal  12582912 июл 11 20:59 ibdata1
+-rw-rw---- 1 vboxadd systemd-journal 100663296 июл 11 21:01 ib_logfile0
+-rw-rw---- 1 vboxadd systemd-journal  12582912 июл 11 20:59 ibtmp1
+-rw-rw---- 1 vboxadd systemd-journal         0 июл 11 20:59 multi-master.info
+drwx------ 2 vboxadd systemd-journal      4096 июл 11 20:59 mysql
+-rw-r--r-- 1 vboxadd systemd-journal        15 июл 11 20:59 mysql_upgrade_info
+drwx------ 2 vboxadd systemd-journal      4096 июл 11 20:59 performance_schema
+drwx------ 2 vboxadd systemd-journal     12288 июл 11 20:59 sys
+
+┌──(naumov㉿kaliLinux)-[~]
+└─$ docker ps                        
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                   NAMES
+ebdc40c0ecb9   phpmyadmin/phpmyadmin   "/docker-entrypoint.…"   12 minutes ago   Up 12 minutes   0.0.0.0:8081->80/tcp, :::8081->80/tcp   phpmyadmin
+fb795fc26dff   mariadb:10.10.2         "docker-entrypoint.s…"   46 minutes ago   Up 46 minutes   3306/tcp                                mariadb
+                                                                                                                                                                                                                                                                                                                           
+┌──(naumov㉿kaliLinux)-[~]
+└─$ docker stop ebdc40c0ecb9
+ebdc40c0ecb9
+                                                                                                                                                                                                                                                                                                                           
+┌──(naumov㉿kaliLinux)-[~]
+└─$ docker stop fb795fc26dff
+fb795fc26dff
+                                                                                                                                                                                                                                                                                                                           
+┌──(naumov㉿kaliLinux)-[~]
+└─$ docker ps               
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+                                                                                                                                                                                                                                                                                                                           
+┌──(naumov㉿kaliLinux)-[~]
+└─$ docker ps -a
+CONTAINER ID   IMAGE                   COMMAND                  CREATED          STATUS                      PORTS     NAMES
+ebdc40c0ecb9   phpmyadmin/phpmyadmin   "/docker-entrypoint.…"   13 minutes ago   Exited (0) 41 seconds ago             phpmyadmin
+fb795fc26dff   mariadb:10.10.2         "docker-entrypoint.s…"   47 minutes ago   Exited (0) 11 seconds ago             mariadb
+
+
