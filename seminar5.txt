@@ -1,0 +1,83 @@
+├── db
+│   └── Dockerfile.db
+├── docker-compose.yml
+└── web
+    ├── Dockerfile.web
+    └── index.html
+
+3 directories, 4 files
+
+┌──(naumov㉿kaliLinux)-[~/homework/docker/hw5]
+└─$ cat ./db/Dockerfile.db  
+FROM mysql:latest
+ENV MYSQL_ROOT_PASSWORD=root
+ENV MYSQL_DATABASE=database
+ENV MYSQL_USER=user
+ENV MYSQL_PASSWORD=pass
+
+┌──(naumov㉿kaliLinux)-[~/homework/docker/hw5]
+└─$ cat ./web/Dockerfile.web 
+FROM nginx:latest
+COPY ./index.html /usr/share/nginx/html
+EXPOSE 80
+
+┌──(naumov㉿kaliLinux)-[~/homework/docker/hw5]
+└─$ cat ./docker-compose.yml
+version: '3.9'
+services:
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile.web
+    ports:
+      - 80:80
+    deploy:
+      replicas: 2
+
+  db:
+    build:
+      context: ./db
+      dockerfile: Dockerfile.db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=database
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
+
+┌──(naumov㉿kaliLinux)-[~/homework/docker/hw5]
+└─$ docker compose up
+docker: 'compose' is not a docker command.
+See 'docker --help'
+                                                                                                                                                                                                                                                                                                                            
+┌──(naumov㉿kaliLinux)-[~/homework/docker/hw5]
+└─$ docker-compose up
+WARNING: The "web" service specifies a port on the host. If multiple containers for this service are created on a single host, the port will clash.
+Creating hw5_web_1 ... 
+Creating hw5_web_1 ... done
+Creating hw5_web_2 ... error
+WARNING: Host is already in use by another container
+
+Creating hw5_db_1  ... done
+
+ERROR: for web  Cannot start service web: driver failed programming external connectivity on endpoint hw5_web_2 (0a504842f6b4ccdb4f5d8455dda3ba2445cac55de9f897f4cf63718b7d6ef24e): Bind for 0.0.0.0:80 failed: port is already allocated
+ERROR: Encountered errors while bringing up the project.
+                                                                                                                                                                                                                                                                                                                            
+┌──(naumov㉿kaliLinux)-[~/homework/docker/hw5]
+└─$ docker ps -a     
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                               NAMES
+b61265f97c0e   hw5_db    "docker-entrypoint.s…"   18 seconds ago   Up 15 seconds   3306/tcp, 33060/tcp                 hw5_db_1
+a725430c176f   hw5_web   "/docker-entrypoint.…"   18 seconds ago   Up 16 seconds   0.0.0.0:80->80/tcp, :::80->80/tcp   hw5_web_1
+9f8e777ec903   hw5_web   "/docker-entrypoint.…"   18 seconds ago   Created                                             hw5_web_2
+
+┌──(naumov㉿kaliLinux)-[~/homework/docker/hw5]
+└─$ docker-compose stop
+Stopping hw5_db_1  ... done
+Stopping hw5_web_1 ... done
+                                                                                                                                                                                                                                                                                                                            
+┌──(naumov㉿kaliLinux)-[~/homework/docker/hw5]
+└─$ docker ps -a                   
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS                      PORTS     NAMES
+b61265f97c0e   hw5_db    "docker-entrypoint.s…"   2 minutes ago   Exited (0) 19 seconds ago             hw5_db_1
+a725430c176f   hw5_web   "/docker-entrypoint.…"   2 minutes ago   Exited (0) 20 seconds ago             hw5_web_1
+9f8e777ec903   hw5_web   "/docker-entrypoint.…"   2 minutes ago   Created                               hw5_web_2
+
